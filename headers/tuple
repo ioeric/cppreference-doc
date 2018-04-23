@@ -18,6 +18,10 @@
 
 #if CPPREFERENCE_STDVER >= 2011
 
+// Include forward declarations so that they are merged with the canonical
+// declarations.
+#include <bits/tuplefwd.h>
+
 #include <bits/memoryfwd.h>  // for std::allocator_arg_t
 #include <utility>           // for std::pair
 

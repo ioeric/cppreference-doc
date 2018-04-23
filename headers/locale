@@ -16,6 +16,10 @@
 #ifndef CPPREFERENCE_LOCALE_H
 #define CPPREFERENCE_LOCALE_H
 
+// Include forward declarations so that they are merged with the canonical
+// declarations.
+#include <bits/localefwd.h>
+
 #include <bits/stringfwd.h>  // for std::string
 #include <ctime>             // for std::tm
 #include <ios>               // for std::ios_base

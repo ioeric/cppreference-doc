@@ -16,6 +16,10 @@
 #ifndef CPPREFERENCE_MEMORY_H
 #define CPPREFERENCE_MEMORY_H
 
+// Include forward declarations so that they are merged with the canonical
+// declarations.
+#include <bits/memoryfwd.h>
+
 #include <exception>    // for std::exception
 #include <iosfwd>       // for std::basic_ostream
 #include <iterator>     // for std::output_iterator_tag

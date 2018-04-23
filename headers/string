@@ -20,7 +20,11 @@
 #include <initializer_list>
 #endif
 
-#include <cstddef>   // for size_t, ptrdiff_t
+// Include forward declarations so that they are merged with the canonical
+// declarations.
+#include <bits/stringfwd.h>
+
+#include <cstddef>  // for size_t, ptrdiff_t
 #include <ios>       // for std::steamoff
 #include <iterator>  // for std::reverse_iterator
 #include <memory>    // for std::allocator
