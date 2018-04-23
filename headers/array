@@ -60,8 +60,6 @@ public:
     void assign(std::initializer_list<T> ilist);
 #endif
 
-    allocator_type get_allocator() const;
-
     // element access
     reference       at(size_type n);
     const_reference at(size_type n) const;

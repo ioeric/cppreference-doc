@@ -18,6 +18,8 @@
 
 #define CLOCKS_PER_SEC 0 // unspecified
 
+#include <cstddef>  // for std::size_t
+
 namespace std {
 
 typedef int clock_t; // actually unspecified

@@ -27,12 +27,13 @@ template<std::intmax_t Num,
 struct ratio {
 public:
     typedef ratio<Num, Denom> type;
-    static constexpr intmax_t num;
-    static constexpr intmax_t den;
+    static constexpr intmax_t num = 0;  // impl-defined
+    static constexpr intmax_t den = 0;  // impl-defined
 };
 
-typedef ratio<1, 1000000000000000000000000> yocto;
-typedef ratio<1,    1000000000000000000000> zepto;
+// error: integer literal is too large to be represented in any integer type
+//typedef ratio<1, 1000000000000000000000000> yocto;
+//typedef ratio<1,    1000000000000000000000> zepto;
 typedef ratio<1,       1000000000000000000> atto;
 typedef ratio<1,          1000000000000000> femto;
 typedef ratio<1,             1000000000000> pico;
@@ -49,8 +50,8 @@ typedef ratio<               1000000000, 1> giga;
 typedef ratio<            1000000000000, 1> tera;
 typedef ratio<         1000000000000000, 1> peta;
 typedef ratio<      1000000000000000000, 1> exa;
-typedef ratio<   1000000000000000000000, 1> zetta;
-typedef ratio<1000000000000000000000000, 1> yotta;
+//typedef ratio<   1000000000000000000000, 1> zetta;
+//typedef ratio<1000000000000000000000000, 1> yotta;
 
 // SIMPLIFIED: the following are alias templates
 template<class R1, class R2>

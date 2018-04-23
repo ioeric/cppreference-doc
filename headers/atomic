@@ -16,6 +16,9 @@
 #ifndef CPPREFERENCE_ATOMIC_H
 #define CPPREFERENCE_ATOMIC_H
 
+#include <cstddef>  // for std::ptrdiff_t
+#include <cstdint>  // for int_least8_t etc
+
 namespace std {
 
 #if CPPREFERENCE_STDVER>= 2011
@@ -93,43 +96,41 @@ struct atomic {
     T fetch_add(T arg,
                 memory_order = std::memory_order_seq_cst);
     T fetch_add(T arg,
-                memory_order = std::memory_order_seq_cst) volatile;
+                memory_order sync = std::memory_order_seq_cst) volatile;
 
     // member of atomic<T*>
     T* fetch_add(std::ptrdiff_t arg,
-                 memory_order = std::memory_order_seq_cst);
+                 memory_order sync = std::memory_order_seq_cst);
     T* fetch_add(std::ptrdiff_t arg,
-                 memory_order = std::memory_order_seq_cst) volatile;
+                 memory_order sync = std::memory_order_seq_cst) volatile;
 
     // member of atomic<Integral>
     T fetch_sub(T arg,
-                memory_order = std::memory_order_seq_cst);
+                memory_order sync = std::memory_order_seq_cst);
     T fetch_sub(T arg,
-                memory_order = std::memory_order_seq_cst) volatile;
+                memory_order sync = std::memory_order_seq_cst) volatile;
 
     // member of atomic<T*>
     T* fetch_sub(std::ptrdiff_t arg,
-                 memory_order = std::memory_order_seq_cst);
+                 memory_order sync = std::memory_order_seq_cst);
     T* fetch_sub(std::ptrdiff_t arg,
-                 memory_order = std::memory_order_seq_cst) volatile;
+                 memory_order sync = std::memory_order_seq_cst) volatile;
 
     // member of atomic<Integral>
     T fetch_and(T arg,
-                memory_order = std::memory_order_seq_cst);
+                memory_order sync = std::memory_order_seq_cst);
     T fetch_and(T arg,
-                memory_order = std::memory_order_seq_cst) volatile;
+                memory_order sync = std::memory_order_seq_cst) volatile;
 
     // member of atomic<Integral>
     T fetch_or(T arg,
-               memory_order = std::memory_order_seq_cst);
+               memory_order sync = std::memory_order_seq_cst);
     T fetch_or(T arg,
-               memory_order = std::memory_order_seq_cst) volatile;
+               memory_order sync = std::memory_order_seq_cst) volatile;
 
     // member of atomic<Integral>
-    T fetch_xor(T arg,
-                memory_xorder = std::memory_xorder_seq_cst);
-    T fetch_xor(T arg,
-                memory_xorder = std::memory_xorder_seq_cst) volatile;
+    T fetch_xor(T arg, memory_order sync = std::memory_order_seq_cst);
+    T fetch_xor(T arg, memory_order sync = std::memory_order_seq_cst) volatile;
 
     // member of atomic<Integral>
     T operator++();
@@ -152,18 +153,21 @@ struct atomic {
     T operator^=(T arg) volatile;
 
     // member of atomic<T*>
-    T* operator++();
-    T* operator++() volatile;
-    T* operator++(int);
-    T* operator++(int) volatile;
-    T* operator--();
-    T* operator--() volatile;
-    T* operator--(int);
-    T* operator--(int) volatile;
-    T* operator+=(std::ptrdiff_t arg);
-    T* operator+=(std::ptrdiff_t arg) volatile;
-    T* operator-=(std::ptrdiff_t arg);
-    T* operator-=(std::ptrdiff_t arg) volatile;
+    // error: functions that differ only in their return type cannot be
+    // overloaded.
+    //
+    // T* operator++();
+    // T* operator++() volatile;
+    // T* operator++(int);
+    // T* operator++(int) volatile;
+    // T* operator--();
+    // T* operator--() volatile;
+    // T* operator--(int);
+    // T* operator--(int) volatile;
+    // T* operator+=(std::ptrdiff_t arg);
+    // T* operator+=(std::ptrdiff_t arg) volatile;
+    // T* operator-=(std::ptrdiff_t arg);
+    // T* operator-=(std::ptrdiff_t arg) volatile;
 };
 
 typedef atomic<bool>               atomic_bool;

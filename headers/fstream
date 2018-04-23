@@ -16,20 +16,29 @@
 #ifndef CPPREFERENCE_FSTREAM_H
 #define CPPREFERENCE_FSTREAM_H
 
+#include <ios>     // for std::ios_base
+#include <iosfwd>  // for std:char_traits
+
 namespace std {
 
 template <
     class CharT,
-    class Traits = std::char_traits<CharT>
+    class Traits
     > class basic_filebuf : public std::basic_streambuf<CharT, Traits> {
 public:
+    typedef CharT char_type;
+    typedef Traits Traits_type;
+    typedef typename Traits::int_type int_type;
+    typedef typename Traits::pos_type pos_type;
+    typedef typename Traits::off_type off_type;
+
     basic_filebuf();
 #if CPPREFERENCE_STDVER>= 2011
-    basic_filebuf(const std::basic_filebuf& rhs) = delete;
-    basic_filebuf(std::basic_filebuf&& rhs);
-    std::basic_filebuf& operator=(std::basic_filebuf&& rhs);
-    std::basic_filebuf& operator=(const std::basic_filebuf& rhs) = delete;
-    void swap(std::basic_filebuf& rhs);
+    basic_filebuf(const basic_filebuf& rhs) = delete;
+    basic_filebuf(basic_filebuf&& rhs);
+    basic_filebuf& operator=(basic_filebuf&& rhs);
+    basic_filebuf& operator=(const basic_filebuf& rhs) = delete;
+    void swap(basic_filebuf& rhs);
 #endif
 
     virtual ~basic_filebuf();
@@ -59,7 +68,7 @@ typedef basic_filebuf<wchar_t> wfilebuf;
 
 template <
     class CharT,
-    class Traits = std::char_traits<CharT>
+    class Traits
     > class basic_fstream : public std::basic_iostream<CharT, Traits> {
 public:
     basic_fstream();
@@ -100,7 +109,7 @@ typedef basic_fstream<wchar_t> wfstream;
 
 template <
     class CharT,
-    class Traits = std::char_traits<CharT>
+    class Traits
     > class basic_ifstream : public std::basic_istream<CharT, Traits> {
 public:
     basic_ifstream();
@@ -141,7 +150,7 @@ typedef basic_ifstream<wchar_t> wifstream;
 
 template <
     class CharT,
-    class Traits = std::char_traits<CharT>
+    class Traits
     > class basic_ofstream : public std::basic_ostream<CharT, Traits> {
 public:
     basic_ofstream();

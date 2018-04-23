@@ -20,16 +20,17 @@
 #include <initializer_list>
 #endif
 
-#include <cstddef> // for size_t, ptrdiff_t
-#include <iterator> // for std::reverse_iterator
-#include <memory> // for std::allocator
+#include <cstddef>   // for size_t, ptrdiff_t
+#include <ios>       // for std::steamoff
+#include <iterator>  // for std::reverse_iterator
+#include <memory>    // for std::allocator
 
 namespace std {
 
 template<class State>
 class fpos {
 public:
-    fpos(streamoff = streamoff());
+    fpos(streamoff off);
 
     operator streamoff() const;
 
@@ -50,21 +51,13 @@ bool operator==(const fpos<State>& x, const fpos<State>& y);
 template<class State>
 bool operator!=(const fpos<State>& x, const fpos<State>& y);
 
-typedef fpos<char_traits<char>::state_type> streampos;
-typedef fpos<char_traits<wchar_t>::state_type> wstreampos;
-
-#if CPPREFERENCE_STDVER>= 2011
-typedef fpos<char_traits<char16_t>::state_type> u16streampos;
-typedef fpos<char_traits<char32_t>::state_type> u32streampos;
-#endif
-
 template<class CharT>
 class char_traits {
 public:
     typedef CharT     char_type;
     typedef int       int_type; // impl-defined integer type
-    typedef streamoff off_type; // actually impl-defined
-    typedef streampos pos_type; // actually impl-defined
+    typedef fpos<mbstate_t> off_type; // actually impl-defined
+    typedef fpos<mbstate_t> pos_type; // actually impl-defined
     typedef mbstate_t state_type; // actually impl-defined
 
     static void assign(char_type& r, const char_type& a);
@@ -85,10 +78,17 @@ public:
     static int_type not_eof(int_type c);
 };
 
+typedef fpos<char_traits<char>::state_type> streampos;
+typedef fpos<char_traits<wchar_t>::state_type> wstreampos;
+
+#if CPPREFERENCE_STDVER>= 2011
+typedef fpos<char_traits<char16_t>::state_type> u16streampos;
+typedef fpos<char_traits<char32_t>::state_type> u32streampos;
+#endif
+
 template <
-    class CharT,
-    class Traits = std::char_traits<CharT>,
-    class Allocator = std::allocator<CharT>
+    class CharT, class Traits,
+    class Allocator
     > class basic_string {
 public:
     typedef Traits traits_type;
@@ -137,10 +137,8 @@ public:
                  CharT ch,
                  const Allocator& alloc = Allocator());
 
-    basic_string(const basic_string& other,
-                 size_type pos,
-                 size_type count = std::basic_string::npos,
-                 const Allocator& alloc = Allocator());
+    basic_string(const basic_string& other, size_type pos,
+                 size_type count = npos, const Allocator& alloc = Allocator());
 
     basic_string(const CharT* s,
                  size_type count,

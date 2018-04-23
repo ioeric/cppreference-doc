@@ -19,10 +19,11 @@
 #if CPPREFERENCE_STDVER>= 2011
 #include <initializer_list>
 
-#include <cstddef> // for size_t, ptrdiff_t
-#include <iterator> // for std::reverse_iterator
-#include <memory> // for std::allocator
-#include <utility> // for std::pair
+#include <cstddef>     // for size_t, ptrdiff_t
+#include <functional>  // for std::hash
+#include <iterator>    // for std::reverse_iterator
+#include <memory>      // for std::allocator
+#include <utility>     // for std::pair
 
 namespace std {
 
@@ -107,7 +108,7 @@ public:
     unordered_map(unordered_map&& other, const Allocator& alloc);
 
     unordered_map(std::initializer_list<value_type> init,
-                  size_type bucket_count = /*implementation-defined*/,
+                  size_type bucket_count = /*implementation-defined*/0,
                   const Hash& hash = Hash(),
                   const KeyEqual& equal = KeyEqual(),
                   const Allocator& alloc = Allocator());
@@ -147,15 +148,16 @@ public:
     iterator end();
     const_iterator end() const;
 
-    reverse_iterator       rbegin();
-    const_reverse_iterator rbegin() const;
-    reverse_iterator       rend();
-    const_reverse_iterator rend() const;
+    // Not in standard
+    //reverse_iterator       rbegin();
+    //const_reverse_iterator rbegin() const;
+    //reverse_iterator       rend();
+    //const_reverse_iterator rend() const;
 
     const_iterator         cbegin() const;
     const_iterator         cend() const;
-    const_reverse_iterator crbegin() const;
-    const_reverse_iterator crend() const;
+    //const_reverse_iterator crbegin() const;
+    //const_reverse_iterator crend() const;
 
     // capacity
     bool empty() const;
@@ -317,7 +319,7 @@ public:
     unordered_multimap(unordered_multimap&& other, const Allocator& alloc);
 
     unordered_multimap(std::initializer_list<value_type> init,
-                       size_type bucket_count = /*implementation-defined*/,
+                       size_type bucket_count = /*implementation-defined*/0,
                        const Hash& hash = Hash(),
                        const KeyEqual& equal = KeyEqual(),
                        const Allocator& alloc = Allocator());
@@ -351,15 +353,16 @@ public:
     iterator end();
     const_iterator end() const;
 
-    reverse_iterator       rbegin();
-    const_reverse_iterator rbegin() const;
-    reverse_iterator       rend();
-    const_reverse_iterator rend() const;
+    // Not in standard
+    //reverse_iterator       rbegin();
+    //const_reverse_iterator rbegin() const;
+    //reverse_iterator       rend();
+    //const_reverse_iterator rend() const;
 
     const_iterator         cbegin() const;
     const_iterator         cend() const;
-    const_reverse_iterator crbegin() const;
-    const_reverse_iterator crend() const;
+    //const_reverse_iterator crbegin() const;
+    //const_reverse_iterator crend() const;
 
     // capacity
     bool empty() const;

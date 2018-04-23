@@ -20,10 +20,11 @@
 #include <initializer_list>
 #endif
 
-#include <cstddef> // for size_t, ptrdiff_t
-#include <iterator> // for std::reverse_iterator
-#include <memory> // for std::allocator
-#include <utility> // for std::pair
+#include <cstddef>     // for size_t, ptrdiff_t
+#include <functional>  // for std::less
+#include <iterator>    // for std::reverse_iterator
+#include <memory>      // for std::allocator
+#include <utility>     // for std::pair
 
 namespace std {
 
@@ -56,8 +57,9 @@ public:
     typedef typename std::allocator_traits<Allocator>::pointer pointer;
     typedef typename std::allocator_traits<Allocator>::const_pointer const_pointer;
 #endif
-    typedef T* iterator; // actual type is unspecified
-    typedef const T* const_iterator; // actual type is unspecified
+    typedef std::iterator<bidirectional_iterator_tag, const value_type>
+        iterator;                     // actual type is unspecified
+    typedef iterator const_iterator;  // actual type is unspecified
     typedef std::reverse_iterator<iterator> reverse_iterator;
     typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 
@@ -281,8 +283,9 @@ public:
     typedef typename std::allocator_traits<Allocator>::pointer pointer;
     typedef typename std::allocator_traits<Allocator>::const_pointer const_pointer;
 #endif
-    typedef T* iterator; // actual type is unspecified
-    typedef const T* const_iterator; // actual type is unspecified
+    typedef std::iterator<bidirectional_iterator_tag, const value_type>
+        iterator;                     // actual type is unspecified
+    typedef iterator const_iterator;  // actual type is unspecified
     typedef std::reverse_iterator<iterator> reverse_iterator;
     typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 

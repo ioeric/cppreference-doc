@@ -16,6 +16,7 @@
 #ifndef CPPREFERENCE_IOSFWD_H
 #define CPPREFERENCE_IOSFWD_H
 
+#include <cwchar> // for mbstate_t
 namespace std {
 
 template<class CharT> struct char_traits;
@@ -81,8 +82,7 @@ typedef basic_ostringstream<wchar_t> wostringstream;
 typedef basic_stringstream<wchar_t> wstringstream;
 
 template<class state> class fpos;
-typedef fpos<char_traits<char>::state_type> streampos;
-typedef fpos<char_traits<wchar_t>::state_type> wstreampos;
+typedef fpos<mbstate_t> streampos;
 
 } // namespace std
 

@@ -18,6 +18,8 @@
 
 #if CPPREFERENCE_STDVER>= 2011
 
+#include <cstddef>  // for std::size_t
+
 namespace std {
 
 template<class T, T v>
@@ -25,9 +27,9 @@ struct integral_constant {
     typedef T value_type;
     typedef integral_constant<T, v> type;
 
-    static constexpr T value;
+    static constexpr T value = v;
     constexpr operator value_type() const;
-    constexpr operator()() const;
+    constexpr value_type operator()() const;
 };
 
 typedef integral_constant<bool, false> false_type;
@@ -71,7 +73,7 @@ template<class T> struct is_pod : integral_constant<bool, false> {};
 template<class T> struct is_literal_type : integral_constant<bool, false> {};
 template<class T> struct is_empty : integral_constant<bool, false> {};
 template<class T> struct is_polymorphic : integral_constant<bool, false> {};
-#if CPPREFERENCE_STDVER>= 2014`
+#if CPPREFERENCE_STDVER>= 2015
 template<class T> struct is_final : integral_constant<bool, false> {};
 #endif
 template<class T> struct is_abstract : integral_constant<bool, false> {};

@@ -16,6 +16,8 @@
 #ifndef CPPREFERENCE_NEW_H
 #define CPPREFERENCE_NEW_H
 
+#include <exception>  // for std::exception
+
 namespace std {
 
 /* SIMPLIFIED: these are implicitly declared even if <new> is not included.

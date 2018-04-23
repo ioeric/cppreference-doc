@@ -18,6 +18,9 @@
 
 #if CPPREFERENCE_STDVER >= 2011
 
+#include <cstddef>  // for std::size_t
+#include <locale>   // for std::codecvt
+
 namespace std {
 
 enum codecvt_mode {

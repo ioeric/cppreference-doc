@@ -18,8 +18,17 @@
 
 #if CPPREFERENCE_STDVER>= 2011
 
+#ifndef __STDC_UTF_16__
 #define __STDC_UTF_16__
+#endif
+
+#ifndef __STDC_UTF_32__
 #define __STDC_UTF_32__
+#endif
+
+#include <cstddef> // for std::size_t
+#include <cwchar>  // for mbstate_t
+
 namespace std {
 
 std::size_t mbrtoc16(char16_t* pc16,

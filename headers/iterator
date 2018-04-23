@@ -17,6 +17,7 @@
 #define CPPREFERENCE_ITERATOR_H
 
 #include <cstddef> // for size_t, ptrdiff_t
+#include <iosfwd>  // for std::char_traits
 
 namespace std {
 
@@ -137,7 +138,7 @@ class move_iterator {
 public:
     typedef Iterator iterator_type;
     typedef Iterator pointer;
-    typedef value_type&& reference;
+    typedef typename Iterator::value_type&& reference;
 #if CPPREFERENCE_SIMPLIFY_TYPEDEFS
     typedef typename ptrdiff_t difference_type;
     typedef typename Iterator::iterator_category iterator_category;
@@ -290,7 +291,7 @@ public:
     insert_iterator& operator++(int);
 protected:
     Container* container;
-    Container::iterator iter;
+    typename Container::iterator iter;
 };
 
 template<class T,
@@ -305,8 +306,8 @@ public:
 
     typedef T value_type;
     typedef Distance difference_type;
-    typedef const T* pointer;
-    typedef const T& reference;
+    typedef const CharT* pointer;
+    typedef const CharT& reference;
     typedef input_iterator_tag iterator_category;
 
     istream_iterator();
@@ -326,7 +327,7 @@ template<class T, class CharT, class Traits, class Dist >
 bool operator==(const istream_iterator<T, CharT, Traits, Dist>& lhs,
                 const istream_iterator<T, CharT, Traits, Dist>& rhs);
 
-template<class CharT, class Traits >
+template<class T, class CharT, class Traits, class Dist >
 bool operator!=(const istream_iterator<T, CharT, Traits, Dist>& lhs,
                 const istream_iterator<T, CharT, Traits, Dist>& rhs);
 
@@ -356,20 +357,19 @@ public:
     ostream_iterator& operator++(int);
 };
 
-template<class T, class CharT, class Traits >
+template <class T, class CharT, class Traits>
 bool operator==(const ostream_iterator<T, CharT, Traits>& lhs,
                 const ostream_iterator<T, CharT, Traits>& rhs);
 
-template<class CharT, class Traits >
+template <class T, class CharT, class Traits>
 bool operator!=(const ostream_iterator<T, CharT, Traits>& lhs,
                 const ostream_iterator<T, CharT, Traits>& rhs);
 
-
-template<class CharT, class Traits = std::char_traits<CharT> >
-class istreambuf_iterator { // SIMPLIFIED: does not inherit iterator
-public:
-    typedef CharT char_type;
-    typedef Traits traits_type;
+template <class CharT, class Traits>
+class istreambuf_iterator {  // SIMPLIFIED: does not inherit iterator
+ public:
+  typedef CharT char_type;
+  typedef Traits traits_type;
 #if CPPREFERENCE_SIMPLIFY_TYPEDEFS
     typedef int int_type;
 #else
@@ -378,10 +378,10 @@ public:
     typedef std::basic_streambuf<CharT, Traits> streambuf_type;
     typedef std::basic_istream<CharT, Traits> istream_type;
 
-    typedef T value_type;
-    typedef Distance difference_type;
-    typedef const T* pointer;
-    typedef const T& reference;
+    typedef CharT value_type;
+    typedef void difference_type;
+    typedef const CharT* pointer;
+    typedef const CharT& reference;
     typedef input_iterator_tag iterator_category;
 
     istreambuf_iterator();
@@ -407,29 +407,28 @@ template<class CharT, class Traits >
 bool operator!=(const istreambuf_iterator<CharT, Traits>& lhs,
                 const istreambuf_iterator<CharT, Traits>& rhs);
 
-template<class CharT,
-         class Traits = std::char_traits<CharT> >
-class ostreambuf_iterator { // SIMPLIFIED: does not inherit iterator
-public:
-    typedef CharT char_type;
-    typedef Traits traits_type;
-    typedef std::basic_streambuf<CharT, Traits> streambuf_type;
-    typedef std::basic_ostream<CharT, Traits> ostream_type;
+template <class CharT, class Traits>
+class ostreambuf_iterator {  // SIMPLIFIED: does not inherit iterator
+ public:
+  typedef CharT char_type;
+  typedef Traits traits_type;
+  typedef std::basic_streambuf<CharT, Traits> streambuf_type;
+  typedef std::basic_ostream<CharT, Traits> ostream_type;
 
-    typedef void value_type;
-    typedef void difference_type;
-    typedef void pointer;
-    typedef void reference;
-    typedef output_iterator_tag iterator_category;
+  typedef void value_type;
+  typedef void difference_type;
+  typedef void pointer;
+  typedef void reference;
+  typedef output_iterator_tag iterator_category;
 
-    ostreambuf_iterator(streambuf_type* buffer);
-    ostreambuf_iterator(ostream_type& stream);
+  ostreambuf_iterator(streambuf_type* buffer);
+  ostreambuf_iterator(ostream_type& stream);
 
-    ostreambuf_iterator& operator=(CharT c);
-    ostreambuf_iterator& operator*();
-    ostreambuf_iterator& operator++();
-    ostreambuf_iterator& operator++(int);
-    bool failed() const;
+  ostreambuf_iterator& operator=(CharT c);
+  ostreambuf_iterator& operator*();
+  ostreambuf_iterator& operator++();
+  ostreambuf_iterator& operator++(int);
+  bool failed() const;
 };
 
 #if CPPREFERENCE_STDVER >= 2011 && CPPREFERENCE_STDVER <2014

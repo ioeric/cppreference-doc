@@ -20,6 +20,10 @@
 #include <initializer_list>
 #endif
 
+#include <deque>  // for std::deque
+#include <vector>  // for std::vector
+#include <functional>  // for std::less
+
 namespace std {
 
 template <

@@ -18,7 +18,8 @@
 
 #if CPPREFERENCE_STDVER >= 2011
 
-#include <utility> // for std::pair
+#include <bits/memoryfwd.h>  // for std::allocator_arg_t
+#include <utility>           // for std::pair
 
 namespace std {
 
@@ -86,7 +87,7 @@ public:
 };
 
 template<class... Types >
-tuple<VTypes...> make_tuple(Types&& ... args);
+tuple<Types...> make_tuple(Types&& ... args);
 
 template<class... Types >
 tuple<Types& ...> tie(Types& ... args);
@@ -94,8 +95,13 @@ tuple<Types& ...> tie(Types& ... args);
 template<class... Types >
 tuple < Types&& ... > forward_as_tuple(Types&& ... args);
 
-template<class... Tuples >
-std::tuple<CTypes...> tuple_cat(Tuples&& ... args);
+template<class... Types >
+std::tuple<Types...> tuple_cat(Types&& ... args);
+
+template <std::size_t I, class... Types>
+class tuple_element {
+  typedef void type;
+}; // SIMPLIFIED
 
 template<std::size_t I, class... Types >
 typename std::tuple_element<I, tuple<Types...> >::type&
@@ -131,13 +137,12 @@ bool operator>=(const tuple<TTypes...>& lhs,
 template<class... Types >
 void swap(tuple<Types...>& lhs, tuple<Types...>& rhs);
 
-template<class... Types >
-class tuple_size<std::tuple<Types...> > : public std::integral_constant<std::size_t, sizeof...(Types)> { };
+template <typename Signature>
+class tuple_size;
 
-template<std::size_t I, class... Types >
-class tuple_element<I, tuple<Types...> > {
-    typedef void type;
-}; // SIMPLIFIED
+template <class... Types>
+class tuple_size<std::tuple<Types...> >
+    : public std::integral_constant<std::size_t, sizeof...(Types)> {};
 
 const void* ignore; // SIMPLIFIED
 

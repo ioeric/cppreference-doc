@@ -17,6 +17,7 @@
 #define CPPREFERENCE_INITIALIZER_LIST_H
 
 #if CPPREFERENCE_STDVER>= 2011
+#include <cstddef>  // for size_t
 
 namespace std {
 

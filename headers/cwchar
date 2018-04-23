@@ -16,37 +16,40 @@
 #ifndef CPPREFERENCE_CWCHAR_H
 #define CPPREFERENCE_CWCHAR_H
 
+#include <cwctype> // for std::wint_t
+#include <cstdio> // for std::FILE
+
 namespace std {
 
 // wide strings
-std::size_t wcslen(const wchar_t* str);
+size_t wcslen(const wchar_t* str);
 int wcscmp(const wchar_t* lhs, const wchar_t* rhs);
-int wcsncmp(const wchar_t* lhs, const wchar_t* rhs, std::size_t count);
+int wcsncmp(const wchar_t* lhs, const wchar_t* rhs, size_t count);
 int wcscoll(const wchar_t* lhs, const wchar_t* rhs);
 const wchar_t* wcschr(const wchar_t* str, wchar_t ch);
 wchar_t* wcschr(wchar_t* str, wchar_t ch);
 const wchar_t* wcsrchr(const wchar_t* str, wchar_t ch);
 wchar_t* wcsrchr(wchar_t* str, wchar_t ch);
 size_t wcsspn(const wchar_t* dest, const wchar_t* src);
-std::size_t wcscspn(const wchar_t* dest, const wchar_t* src);
+size_t wcscspn(const wchar_t* dest, const wchar_t* src);
 const wchar_t* wcspbrk(const wchar_t* dest, const wchar_t* str);
 wchar_t* wcspbrk(wchar_t* dest, const wchar_t* str);
 const wchar_t* wcsstr(const wchar_t* dest, const wchar_t* src);
 wchar_t* wcsstr(wchar_t* dest, const wchar_t* src);
 wchar_t* wcstok(wchar_t* str, const wchar_t* delim, wchar_t** ptr);
 
-wchar_t* wmemcpy(wchar_t* dest, const wchar_t* src, std::size_t count);
-wchar_t* wmemmove(wchar_t* dest, const wchar_t* src, std::size_t count);
-int wmemcmp(const wchar_t* lhs, const wchar_t* rhs, std::size_t count);
-const wchar_t* wmemchr(const wchar_t* ptr, wchar_t ch, std::size_t count);
-wchar_t* wmemchr(wchar_t* ptr, wchar_t ch, std::size_t count);
-wchar_t* wmemset(wchar_t* dest, wchar_t ch, std::size_t count);
+wchar_t* wmemcpy(wchar_t* dest, const wchar_t* src, size_t count);
+wchar_t* wmemmove(wchar_t* dest, const wchar_t* src, size_t count);
+int wmemcmp(const wchar_t* lhs, const wchar_t* rhs, size_t count);
+const wchar_t* wmemchr(const wchar_t* ptr, wchar_t ch, size_t count);
+wchar_t* wmemchr(wchar_t* ptr, wchar_t ch, size_t count);
+wchar_t* wmemset(wchar_t* dest, wchar_t ch, size_t count);
 
 wchar_t* wcscpy(wchar_t* dest, const wchar_t* src);
-wchar_t* wcsncpy(wchar_t* dest, const wchar_t* src, std::size_t count);
+wchar_t* wcsncpy(wchar_t* dest, const wchar_t* src, size_t count);
 wchar_t* wcscat(wchar_t* dest, const wchar_t* src);
-wchar_t* wcsncat(wchar_t* dest, const wchar_t* src, std::size_t count);
-std::size_t strxfrm(wchar_t* dest, const wchar_t* src, std::size_t count);
+wchar_t* wcsncat(wchar_t* dest, const wchar_t* src, size_t count);
+size_t strxfrm(wchar_t* dest, const wchar_t* src, size_t count);
 
 // string conversions
 long      wcstol(const wchar_t* str, wchar_t** str_end, int base);
@@ -62,22 +65,22 @@ long double wcstold(const wchar_t* str, wchar_t** str_end);
 // multibyte strings
 struct mbstate_t;
 int mbsinit(const std::mbstate_t* ps);
-std::size_t mbrtowc(wchar_t* pwc,
+size_t mbrtowc(wchar_t* pwc,
                     const char* s,
-                    std::size_t n,
+                    size_t n,
                     std::mbstate_t* ps);
 std::wint_t btowc(int c);
-std::size_t mbsrtowcs(wchar_t* dst,
+size_t mbsrtowcs(wchar_t* dst,
                       const char** src,
-                      std::size_t len,
+                      size_t len,
                       std::mbstate_t* ps);
 int wctob(std::wint_t c);
-std::size_t wcrtomb(char* s, wchar_t wc, std::mbstate_t* ps);
-std::size_t wcsrtombs(char* dst,
+size_t wcrtomb(char* s, wchar_t wc, std::mbstate_t* ps);
+size_t wcsrtombs(char* dst,
                       const wchar_t** src,
-                      std::size_t len,
+                      size_t len,
                       std::mbstate_t* ps);
-std::size_t mbrlen(const char* s, std::size_t n, std::mbstate_t* ps);
+size_t mbrlen(const char* s, size_t n, std::mbstate_t* ps);
 
 // input/output
 
@@ -101,10 +104,10 @@ int vswscanf(const wchar_t* buffer, const wchar_t* format, va_list vlist);
 #endif
 int wprintf(const wchar_t* format, ...);
 int fwprintf(std::FILE* stream, const wchar_t* format, ...);
-int swprintf(wchar_t* buffer, std::size_t size, const wchar_t* format, ...);
+int swprintf(wchar_t* buffer, size_t size, const wchar_t* format, ...);
 int vwprintf(const wchar_t* format, va_list vlist);
 int vfwprintf(std::FILE* stream, const wchar_t* format, va_list vlist);
-int vswprintf(const wchar_t* buffer, std::size_t size, const wchar_t* format, va_list vlist);
+int vswprintf(const wchar_t* buffer, size_t size, const wchar_t* format, va_list vlist);
 
 } // namespace std
 

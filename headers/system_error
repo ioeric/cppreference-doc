@@ -18,7 +18,15 @@
 
 #if CPPREFERENCE_STDVER>= 2011
 
+#include <bits/stringfwd.h>  // for std::string
+#include <iosfwd>            // for std::basic_ostream etc
+#include <stdexcept>         // for std::runtime_error
+#include <type_traits>       // for std::integral_constant
+
 namespace std {
+
+class error_condition;
+class error_code;
 
 class error_category {
 public:

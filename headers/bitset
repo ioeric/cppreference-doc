@@ -16,6 +16,9 @@
 #ifndef CPPREFERENCE_BITSET_H
 #define CPPREFERENCE_BITSET_H
 
+#include <cstddef>   // for std::size_t
+#include <string>   // for basic_string
+
 namespace std {
 
 template<std::size_t N>

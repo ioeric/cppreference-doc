@@ -16,7 +16,10 @@
 #ifndef CPPREFERENCE_IOS_H
 #define CPPREFERENCE_IOS_H
 
-#if CPPREFERENCE_STDVER>= 2011
+#include <bits/localefwd.h>
+#include <cstddef>
+
+#if CPPREFERENCE_STDVER >= 2011
 #include <system_error>
 #endif
 
@@ -25,6 +28,16 @@ namespace std {
 typedef int streamoff;
 typedef int streamsize;
 template<class StateT> class fpos;
+
+#if CPPREFERENCE_STDVER>= 2011
+enum class io_errc {
+    stream
+};
+
+std::error_code make_error_code(std::io_errc e);
+std::error_condition make_error_condition(std::io_errc e);
+const std::error_category& iostream_category();
+#endif
 
 class ios_base {
 private:
@@ -52,46 +65,46 @@ public:
     class Init;
 
     typedef int openmode; // actually impl-defined
-    static constexpr openmode app;
-    static constexpr openmode binary;
-    static constexpr openmode in;
-    static constexpr openmode out;
-    static constexpr openmode trunc;
-    static constexpr openmode ate;
+    static constexpr openmode app = 0;
+    static constexpr openmode binary = 0;
+    static constexpr openmode in = 0;
+    static constexpr openmode out = 0;
+    static constexpr openmode trunc = 0;
+    static constexpr openmode ate = 0;
 
     typedef int fmtflags; // actually impl-defined
-    static constexpr fmtflags dec;
-    static constexpr fmtflags oct;
-    static constexpr fmtflags hex;
-    static constexpr fmtflags basefield;
+    static constexpr fmtflags dec = 0;
+    static constexpr fmtflags oct = 0;
+    static constexpr fmtflags hex = 0;
+    static constexpr fmtflags basefield = 0;
 
-    static constexpr fmtflags left;
-    static constexpr fmtflags right;
-    static constexpr fmtflags internal;
-    static constexpr fmtflags adjustfield;
+    static constexpr fmtflags left = 0;
+    static constexpr fmtflags right = 0;
+    static constexpr fmtflags internal = 0;
+    static constexpr fmtflags adjustfield = 0;
 
-    static constexpr fmtflags scientific;
-    static constexpr fmtflags fixed;
-    static constexpr fmtflags floatfield;
+    static constexpr fmtflags scientific = 0;
+    static constexpr fmtflags fixed = 0;
+    static constexpr fmtflags floatfield = 0;
 
-    static constexpr fmtflags boolalpha;
-    static constexpr fmtflags showbase;
-    static constexpr fmtflags showpoint;
-    static constexpr fmtflags showpos;
-    static constexpr fmtflags skipws;
-    static constexpr fmtflags unitbuf;
-    static constexpr fmtflags uppercase;
+    static constexpr fmtflags boolalpha = 0;
+    static constexpr fmtflags showbase = 0;
+    static constexpr fmtflags showpoint = 0;
+    static constexpr fmtflags showpos = 0;
+    static constexpr fmtflags skipws = 0;
+    static constexpr fmtflags unitbuf = 0;
+    static constexpr fmtflags uppercase = 0;
 
     typedef int iostate; // actually impl-defined
-    static constexpr iostate goodbit;
-    static constexpr iostate badbit;
-    static constexpr iostate failbit;
-    static constexpr iostate eofbit;
+    static constexpr iostate goodbit = 0;
+    static constexpr iostate badbit = 0;
+    static constexpr iostate failbit = 0;
+    static constexpr iostate eofbit = 0;
 
     typedef int seekdir; // actually impl-defined
-    static constexpr seekdir beg;
-    static constexpr seekdir end;
-    static constexpr seekdir cur;
+    static constexpr seekdir beg = 0;
+    static constexpr seekdir end = 0;
+    static constexpr seekdir cur = 0;
 
     enum event {
         erase_event,
@@ -123,8 +136,7 @@ public:
     static bool sync_with_stdio(bool sync = true);
 };
 
-template<class CharT,
-         class Traits = std::char_traits<CharT>>
+template<class CharT, class Traits>
 class basic_ios : public ios_base {
 public:
     typedef CharT char_type;
@@ -171,9 +183,6 @@ public:
     std::basic_ostream<CharT, Traits>* tie() const;
     std::basic_ostream<CharT, Traits>* tie(std::basic_ostream<CharT, Traits>* str);
 
-    char narrow(char_type c, char dfault) const;
-    char_type widen(char c) const;
-
 protected:
     basic_ios();
     void init(std::basic_streambuf<CharT, Traits>* sb);
@@ -219,16 +228,6 @@ ios_base& fixed(ios_base& str);
 ios_base& scientific(ios_base& str);
 ios_base& hexfloat(ios_base& str);
 ios_base& defaultfloat(ios_base& str);
-
-#if CPPREFERENCE_STDVER>= 2011
-enum class io_errc {
-    stream
-};
-
-std::error_code make_error_code(std::io_errc e);
-std::error_condition make_error_condition(std::io_errc e);
-const std::error_category& iostream_category();
-#endif
 
 } // namespace std
 

@@ -16,8 +16,6 @@
 #ifndef CPPREFERENCE_CSTDDEF_H
 #define CPPREFERENCE_CSTDDEF_H
 
-namespace std {
-
 #ifndef offsetof
 #define offsetof(type,member_designator) 0 // SIMPLIFIED
 #endif

@@ -16,6 +16,7 @@
 #ifndef CPPREFERENCE_STDEXCEPT_H
 #define CPPREFERENCE_STDEXCEPT_H
 
+#include <bits/stringfwd.h>  // for std::string
 #include <exception>
 
 namespace std {

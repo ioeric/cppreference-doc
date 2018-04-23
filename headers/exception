@@ -27,6 +27,10 @@ public:
 };
 
 #if CPPREFERENCE_STDVER>= 2011
+typedef void* exception_ptr; // actually unspecified
+#endif // CPPREFERENCE_STDVER>= 2011
+
+#if CPPREFERENCE_STDVER>= 2012
 class nested_exception {
 public:
     nested_exception();
@@ -49,10 +53,6 @@ public:
 void unexpected();
 typedef void (*unexpected_handler)();
 typedef void (*terminate_handler)();
-
-#if CPPREFERENCE_STDVER>= 2011
-typedef void* exception_ptr; // actually unspecified
-#endif // CPPREFERENCE_STDVER>= 2011
 
 bool uncaught_exception();
 #if CPPREFERENCE_STDVER>= 2017

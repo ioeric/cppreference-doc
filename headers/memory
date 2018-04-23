@@ -16,7 +16,11 @@
 #ifndef CPPREFERENCE_MEMORY_H
 #define CPPREFERENCE_MEMORY_H
 
-#include <utility> // for std::pair
+#include <exception>    // for std::exception
+#include <iosfwd>       // for std::basic_ostream
+#include <iterator>     // for std::output_iterator_tag
+#include <type_traits>  // for std::remove_reference
+#include <utility>      // for std::pair
 
 namespace std {
 
@@ -102,6 +106,11 @@ unique_ptr<T> make_unique(Args&& ... args);
 
 #endif
 
+template <class T>
+class weak_ptr;
+
+template <class T>
+class auto_ptr;
 
 template<class T> class shared_ptr {
 public:
@@ -332,15 +341,15 @@ class auto_ptr {
 public:
     typedef T element_type;
 
-    explicit auto_ptr(X* p = 0);
+    explicit auto_ptr(element_type* p = 0);
 
     auto_ptr(auto_ptr& r);
 
     template<class Y>
     auto_ptr(auto_ptr<Y>& r);
 
-    template<class Y>
-    auto_ptr(auto_ptr_ref<Y> m);
+    //template<class Y>
+    //auto_ptr(auto_ptr_ref<Y> m);
 
     ~auto_ptr();
 
@@ -349,10 +358,10 @@ public:
     template<class Y>
     auto_ptr& operator=(auto_ptr<Y>& r);
 
-    auto_ptr& operator=(auto_ptr_ref m);
+    //auto_ptr& operator=(auto_ptr_ref m);
 
-    template<class Y>
-    operator auto_ptr_ref<Y>();
+    //template<class Y>
+    //operator auto_ptr_ref<Y>();
 
     template<class Y>
     operator auto_ptr<Y>();
@@ -434,7 +443,8 @@ struct allocator {
     pointer address(reference x) const;
     const_pointer address(const_reference x) const;
 
-    pointer allocate(size_type n, std::allocator<void>::const_pointer hint = 0);
+    // SIMPLIFIED: allocator<void>::const_pointer hint
+    pointer allocate(size_type n, const value_type* hint = 0);
     void deallocate(pointer p, size_type n);
     size_type max_size() const;
 
@@ -475,10 +485,10 @@ struct allocator_traits {
 
     // SIMPLIFIED: actually is alias template and uses Alloc::rebind
     template<class T>
-    class rebind_alloc<T> : public Alloc {};
+    class rebind_alloc : public Alloc {};
     // SIMPLIFIED: actually is alias template
-    template<class T>
-    class rebind_traits<T> : public allocator_traits<rebind_alloc<T>> {};
+    template <class T>
+    class rebind_traits : public allocator_traits<rebind_alloc<T>> {};
 
     static pointer allocate(Alloc& a, size_type n);
     static pointer allocate(Alloc& a, size_type n, const_void_pointer hint);
@@ -510,7 +520,7 @@ enum class pointer_safety {
 template<class Ptr>
 struct pointer_traits {
     typedef Ptr pointer;
-    typedef void element_type; // SIMPLIFIED
+    typedef int element_type;  // SIMPLIFIED
     typedef ptrdiff_t difference_type;
 
     template<class U>

@@ -184,7 +184,7 @@ struct imaxdiv_t {
 
 std::intmax_t abs(std::intmax_t n);
 std::intmax_t imaxabs(std::intmax_t n);
-std::imaxdiv_t div(std::intmax_t x, std::intmax_t y);
+//std::imaxdiv_t div(std::intmax_t x, std::intmax_t y);
 std::imaxdiv_t imaxdiv(std::intmax_t x, std::intmax_t y);
 std::intmax_t strtoimax(const char* nptr, char** endptr, int base);
 std::uintmax_t strtoumax(const char* nptr, char** endptr, int base);

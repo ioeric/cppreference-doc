@@ -16,6 +16,8 @@
 #ifndef CPPREFERENCE_CSTDLIB_H
 #define CPPREFERENCE_CSTDLIB_H
 
+#include <cstddef>  // for std::size_t
+
 namespace std {
 
 // math utils

@@ -1,4 +1,4 @@
-/*  Copyright (C) 2015  Povilas Kanapickas <povilas@radix.lt>
+/*  Copyright (C) 2016  Povilas Kanapickas <povilas@radix.lt>
 
     This file is part of cppreference-doc
 
@@ -21,6 +21,21 @@
 #endif
 
 namespace std {
+
+class slice;
+class gslice;
+
+template<class T>
+class slice_array;
+
+template<class T>
+class gslice_array;
+
+template <class T>
+class mask_array;
+
+template <class T>
+class indirect_array;
 
 template<class T>
 class valarray {
@@ -50,16 +65,17 @@ public:
     valarray<T>& operator=(valarray<T>&& other);
 #endif
     valarray<T>& operator=(const T& val);
-    valarray<T>& operator=(const std::slice_array& other);
-    valarray<T>& operator=(const std::gslice_array& other);
-    valarray<T>& operator=(const std::mask_array& other);
-    valarray<T>& operator=(const std::indirect_array& other);
+    valarray<T>& operator=(const std::slice_array<T>& other);
+    valarray<T>& operator=(const std::gslice_array<T>& other);
+    valarray<T>& operator=(const std::mask_array<T>& other);
+    valarray<T>& operator=(const std::indirect_array<T>& other);
 #if CPPREFERENCE_STDVER>= 2011
     valarray<T>& operator=(std::initializer_list<T> il);
 #endif
 
     T                      operator[](std::size_t pos) const;
-    const T&               operator[](std::size_t pos) const;
+    // error: functions that differ only in their return type cannot be overloaded
+    //const T&               operator[](std::size_t pos) const;
     T&                     operator[](std::size_t pos);
     std::valarray<T>       operator[](std::slice slicearr) const;
     std::slice_array<T>    operator[](std::slice slicearr);

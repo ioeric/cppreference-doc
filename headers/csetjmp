@@ -20,10 +20,10 @@ namespace std {
 
 struct jmp_buf; // actually a typedef
 
-void longjmp(std::jmp_buf env, int status);
+void longjmp(jmp_buf env, int status);
 
 } // namespace std
 
-void setjmp(jmp_buf buf); // actually a macro
+void setjmp(std::jmp_buf buf);  // actually a macro
 
 #endif // CPPREFERENCE_CSETJMP_H

@@ -17,9 +17,14 @@
 #define CPPREFERENCE_FUTURE_H
 
 #if CPPREFERENCE_STDVER>= 2011
+#include <chrono>  // for std::chrono
 #include <stdexcept>
+#include <system_error>  // for std::error_code
 
 namespace std {
+
+template<class T>
+class future;
 
 template<class R>
 class promise { // SIMPLIFIED: removed R& and void specializations
@@ -37,7 +42,7 @@ public:
 
     void swap(promise& other);
 
-    std::future<T> get_future();
+    std::future<R> get_future();
 
     void set_value(const R& value);
     void set_value(R&& value);
@@ -53,6 +58,9 @@ public:
 
 template<class R>
 void swap(promise<R>& lhs, promise<R>& rhs);
+
+template <typename Signature>
+class packaged_task;
 
 template<class R, class ...Args>
 class packaged_task<R(Args...)> {
@@ -79,9 +87,9 @@ public:
 
     std::future<R> get_future();
 
-    void operator()(ArgTypes... args);
+    void operator()(Args... args);
 
-    void make_ready_at_thread_exit(ArgTypes... args);
+    void make_ready_at_thread_exit(Args... args);
 
     void reset();
 };
@@ -89,6 +97,15 @@ public:
 template<class Function, class... Args>
 void swap(packaged_task<Function(Args...)>& lhs,
           packaged_task<Function(Args...)>& rhs);
+
+template <class T>
+class shared_future;
+
+enum class future_status {
+    ready,
+    timeout,
+    deferred
+};
 
 template<class T>
 class future { // SIMPLIFIED: removed T& and void specializations
@@ -104,8 +121,9 @@ public:
     std::shared_future<T> share();
 
     T get(); // member only of generic specialization
-    T& get(); // member only of T& specialization
-    void get(); // member only of void specialization
+    // error: functions that differ only in their return type cannot be overloaded
+    //T& get(); // member only of T& specialization
+    //void get(); // member only of void specialization
 
     bool valid() const;
 
@@ -132,8 +150,8 @@ public:
     shared_future& operator=(shared_future&& other);
 
     T get(); // member only of generic specialization
-    T& get(); // member only of T& specialization
-    void get(); // member only of void specialization
+    //T& get(); // member only of T& specialization
+    //void get(); // member only of void specialization
 
     bool valid() const;
 
@@ -148,12 +166,6 @@ public:
 
 enum class launch {
     async,
-    deferred
-};
-
-enum class future_status {
-    ready,
-    timeout,
     deferred
 };
 

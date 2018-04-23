@@ -17,7 +17,12 @@
 #define CPPREFERENCE_RANDOM_H
 
 #if CPPREFERENCE_STDVER >= 2011
+#include <cstdint>  // for std::uint_fast32_t
 #include <initializer_list>
+#include <iosfwd>
+#include <limits>  // for std::numeric_limits
+#include <string>  // for std::string
+#include <vector>  // for std::vector
 
 namespace std {
 
@@ -29,10 +34,10 @@ template <
     > class linear_congruential_engine {
 public:
     typedef UIntType result_type;
-    static constexpr UIntType multiplier;
-    static constexpr UIntType increment;
-    static constexpr UIntType modulus;
-    static constexpr UIntType default_seed;
+    static constexpr UIntType multiplier = a;
+    static constexpr UIntType increment = c;
+    static constexpr UIntType modulus = m;
+    static constexpr UIntType default_seed = 1u;
 
     explicit linear_congruential_engine(result_type value = default_seed);
 
@@ -86,24 +91,25 @@ template <
     > class mersenne_twister_engine {
 public:
     typedef UIntType result_type;
-    static constexpr size_t word_size;
-    static constexpr size_t state_size;
-    static constexpr size_t shift_size;
-    static constexpr size_t mask_bits;
-    static constexpr UIntType xor_mask;
-    static constexpr size_t tampering_u;
-    static constexpr UIntType tampering_d;
-    static constexpr size_t tampering_s;
-    static constexpr UIntType tampering_b;
-    static constexpr size_t tampering_t;
-    static constexpr UIntType tampering_c;
-    static constexpr size_t tampering_l;
-    static constexpr UIntType initialization_multiplier;
+    static constexpr size_t word_size = w;
+    static constexpr size_t state_size = n;
+    static constexpr size_t shift_size = m;
+    static constexpr size_t mask_bits = r;
+    static constexpr UIntType xor_mask = a;
+    static constexpr size_t tampering_u = u;
+    static constexpr UIntType tampering_d = d;
+    static constexpr size_t tampering_s = s;
+    static constexpr UIntType tampering_b = b;
+    static constexpr size_t tampering_t = t;
+    static constexpr UIntType tampering_c = c;
+    static constexpr size_t tampering_l = l;
+    static constexpr UIntType initialization_multiplier = f;
+    static constexpr UIntType default_seed = 5489u;
 
     explicit mersenne_twister_engine(result_type value = default_seed);
 
-    template<class Sseq >
-    explicit mersenne_twister_engine(Sseq& s);
+    template <class Sseq>
+    explicit mersenne_twister_engine(Sseq& q);
 
     mersenne_twister_engine(const mersenne_twister_engine& other);
 
@@ -176,15 +182,15 @@ template <
     > class subtract_with_carry_engine {
 public:
     typedef UIntType result_type;
-    static constexpr size_t word_size;
-    static constexpr size_t short_lag;
-    static constexpr size_t long_lag;
-    static constexpr UIntType default_seed;
+    static constexpr size_t word_size = w;
+    static constexpr size_t short_lag = s;
+    static constexpr size_t long_lag = r;
+    static constexpr UIntType default_seed = 19780503u;
 
     explicit subtract_with_carry_engine(result_type value = default_seed);
 
     template<class Sseq >
-    explicit subtract_with_carry_engine(Sseq& s);
+    explicit subtract_with_carry_engine(Sseq& q);
 
     subtract_with_carry_engine(const subtract_with_carry_engine& other);
 
@@ -226,12 +232,12 @@ typedef std::subtract_with_carry_engine<std::uint_fast64_t, 48, 5, 12> ranlex48_
 
 template <
     class Engine,
-    size_t P, size_t R
+    size_t p, size_t r
     > class discard_block_engine {
 public:
     typedef typename Engine::result_type result_type;
-    static constexpr size_t block_size;
-    static constexpr size_t used_size;
+    static constexpr size_t block_size = p;
+    static constexpr size_t used_size = r;
 
     discard_block_engine();
 
@@ -278,6 +284,7 @@ std::basic_istream<CharT, Traits>&
 operator>>(std::basic_istream<CharT, Traits>& ist,
            discard_block_engine<Engine, p, r>& e);
 
+typedef subtract_with_carry_engine <uint_fast64_t, 48, 5, 12> ranlux48_base;
 typedef std::discard_block_engine<std::ranlux24_base, 223, 23> randex24;
 typedef std::discard_block_engine<std::ranlux48_base, 389, 11> randex48;
 
@@ -320,7 +327,7 @@ template <
     > class shuffle_order_engine {
 public:
     typedef typename Engine::result_type result_type;
-    static constexpr size_t table_size;
+    static constexpr size_t table_size = K;
 
     shuffle_order_engine();
 
